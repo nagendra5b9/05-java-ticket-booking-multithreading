@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineThread | Multithreaded Ticket Booking Simulation</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="booking-wrapper">
+    <header class="booking-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+        </div>
+        <div>
+          <h1>CineThread Ticket Engine</h1>
+          <div class="tech-tag">Java Multithreading: ReentrantLock, ExecutorService & Concurrency Guard</div>
+        </div>
+      </div>
+      <div class="header-buttons">
+        <button class="btn btn-simulate" id="simulateThreadsBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Run Concurrent Thread Simulation (16 Threads)
+        </button>
+        <button class="btn btn-outline" id="resetSeatsBtn">Reset Hall</button>
+      </div>
+    </header>
+
+    <!-- Metrics Bar -->
+    <section class="telemetry-grid">
+      <div class="telemetry-card">
+        <div class="label">Total Hall Capacity</div>
+        <div class="val" id="totalSeats">24</div>
+        <div class="caption">Shared Resource Array</div>
+      </div>
+      <div class="telemetry-card">
+        <div class="label">Booked Seats</div>
+        <div class="val highlight" id="bookedSeats">0</div>
+        <div class="caption">AtomicInteger Increment</div>
+      </div>
+      <div class="telemetry-card">
+        <div class="label">Available Seats</div>
+        <div class="val" id="availableSeats">24</div>
+        <div class="caption">Thread-Safe Remaining</div>
+      </div>
+      <div class="telemetry-card">
+        <div class="label">Race Conflicts Prevented</div>
+        <div class="val warning" id="conflictsPrevented">0</div>
+        <div class="caption">ReentrantLock Contention</div>
+      </div>
+    </section>
+
+    <!-- Main Workspace -->
+    <main class="workspace-grid">
+      <!-- Seating Map -->
+      <section class="seating-section">
+        <div class="cinema-screen">
+          <div class="screen-curve"></div>
+          <span>CINEMA PROJECTION SCREEN</span>
+        </div>
+
+        <div class="tier-label">VIP Section ($75.00)</div>
+        <div class="seats-row" id="vipRow">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="tier-label">Standard Regular Section ($35.00)</div>
+        <div class="seats-row" id="regularRow1">
+          <!-- Populated by JS -->
+        </div>
+        <div class="seats-row" id="regularRow2">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="legend-row">
+          <div class="legend-item"><span class="legend-dot available"></span> Available</div>
+          <div class="legend-item"><span class="legend-dot locked"></span> Locking / Contention</div>
+          <div class="legend-item"><span class="legend-dot booked"></span> Successfully Reserved</div>
+        </div>
+      </section>
+
+      <!-- Thread Console & Event Stream -->
+      <aside class="thread-console">
+        <div class="console-head">
+          <h3>Live Concurrency Telemetry</h3>
+          <span class="active-badge" id="threadEngineStatus">Engine Idle</span>
+        </div>
+
+        <div class="terminal-box" id="terminalBox">
+          <div class="terminal-line info">[System] Concurrency engine ready. 8 worker threads available in pool.</div>
+          <div class="terminal-line">[System] Click 'Run Concurrent Thread Simulation' or click a seat manually to test locking.</div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
